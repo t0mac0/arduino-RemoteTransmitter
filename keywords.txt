@@ -1,0 +1,8 @@
+RemoteTransmitter KEYWORD1
+RemoteTransmitterID KEYWORD1
+
+begin KEYWORD2
+send KEYWORD2
+
+setID KEYWORD2
+sendCode KEYWORD2
