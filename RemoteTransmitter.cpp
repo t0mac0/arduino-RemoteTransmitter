@@ -1,3 +1,5 @@
+#include <util/delay.h>
+
 #include "Arduino.h"
 #include "RemoteTransmitter.h"
 
@@ -15,23 +17,23 @@ void RemoteTransmitter::send(uint32_t bits) {
 
   while (times --> 0) {
     digitalWrite(mPin, HIGH);
-    delayMicroseconds(shortPulseLen);
+    _delay_us(shortPulseLen);
     digitalWrite(mPin, LOW);
-    delayMicroseconds(syncLen);
+    _delay_us(syncLen);
 
     for (int8_t i = 23; i >= 0; i--) {
       bool val = bits & (((uint32_t)1) << i);
       if (val) {
 	digitalWrite(mPin, HIGH);
-	delayMicroseconds(longPulseLen);
+	_delay_us(longPulseLen);
 	digitalWrite(mPin, LOW);
-	delayMicroseconds(shortPulseLen);
+	_delay_us(shortPulseLen);
       }
       else {
 	digitalWrite(mPin, HIGH);
-	delayMicroseconds(shortPulseLen);
+	_delay_us(shortPulseLen);
 	digitalWrite(mPin, LOW);
-	delayMicroseconds(longPulseLen);
+	_delay_us(longPulseLen);
       }
     }
   }
