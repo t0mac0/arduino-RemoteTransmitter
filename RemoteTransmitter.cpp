@@ -16,28 +16,33 @@ void RemoteTransmitter::send(uint32_t bits) {
   uint8_t times = 5;
 
   while (times --> 0) {
-    digitalWrite(mPin, HIGH);
-    _delay_us(shortPulseLen);
-    digitalWrite(mPin, LOW);
-    _delay_us(syncLen);
+    sendOnce(bits);
+  }
+}
 
-    for (int8_t i = 23; i >= 0; i--) {
-      bool val = bits & (((uint32_t)1) << i);
-      if (val) {
-	digitalWrite(mPin, HIGH);
-	_delay_us(longPulseLen);
-	digitalWrite(mPin, LOW);
-	_delay_us(shortPulseLen);
-      }
-      else {
-	digitalWrite(mPin, HIGH);
-	_delay_us(shortPulseLen);
-	digitalWrite(mPin, LOW);
-	_delay_us(longPulseLen);
-      }
+void RemoteTransmitter::sendOnce(uint32_t bits) {
+  digitalWrite(mPin, HIGH);
+  _delay_us(shortPulseLen);
+  digitalWrite(mPin, LOW);
+  _delay_us(syncLen);
+
+  for (int8_t i = 23; i >= 0; i--) {
+    bool val = bits & (((uint32_t)1) << i);
+    if (val) {
+      digitalWrite(mPin, HIGH);
+      _delay_us(longPulseLen);
+      digitalWrite(mPin, LOW);
+      _delay_us(shortPulseLen);
+    }
+    else {
+      digitalWrite(mPin, HIGH);
+      _delay_us(shortPulseLen);
+      digitalWrite(mPin, LOW);
+      _delay_us(longPulseLen);
     }
   }
 }
+
 
 RemoteTransmitterID::RemoteTransmitterID(int pin)
   : RemoteTransmitter(pin)

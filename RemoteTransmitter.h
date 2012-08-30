@@ -14,6 +14,7 @@ public:
   RemoteTransmitter(int pin);
   void begin();
   void send(uint32_t bits);
+  void sendOnce(uint32_t bits);
 };
 
 class RemoteTransmitterID : public RemoteTransmitter {
